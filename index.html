@@ -5,196 +5,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REBOTE | Elevated Sports Essentials</title>
     <style>
-        /* LUXURY BRAND STYLING */
-        :root {
-            --brand-navy: #1a2a3a; /* The court blue from your photos */
-            --brand-cream: #f9f7f2; /* The elegant bag beige */
-            --brand-white: #ffffff;
-            --text-main: #333333;
-        }
+        :root { --navy: #1a2a3a; --cream: #f9f7f2; --white: #ffffff; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background: var(--white); color: #333; }
+        
+        /* Navigation */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
+        nav a { text-decoration: none; color: var(--navy); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; }
+        .logo { font-size: 1.5rem; letter-spacing: 4px; text-decoration: none; color: var(--navy); }
 
-        body {
-            margin: 0;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: var(--brand-white);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
+        /* Hero */
+        .hero { height: 50vh; background: var(--navy); color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .hero h1 { font-size: 2.5rem; letter-spacing: 3px; margin-bottom: 5px; }
+        
+        /* Grid */
+        .product-grid { display: flex; justify-content: center; gap: 30px; padding: 50px 5%; flex-wrap: wrap; }
+        .card { border: 1px solid #eee; padding: 15px; width: 280px; background: var(--cream); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .card img { width: 100%; height: 300px; object-fit: cover; background: #ddd; }
+        .btn { background: var(--navy); color: white; border: none; padding: 12px 20px; cursor: pointer; width: 100%; margin-top: 10px; letter-spacing: 1px; }
 
-        /* NAVIGATION */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 5%;
-            background: var(--brand-white);
-            border-bottom: 1px solid #eee;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-weight: bold;
-            font-size: 1.5rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-main);
-            margin-left: 25px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* HERO SECTION */
-        .hero {
-            height: 80vh;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-                        url('https://images.unsplash.com/photo-1626248683404-586bc5418b76?q=80&w=2070&auto=format&fit=crop'); /* Placeholder: Replace with your court photo */
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            font-weight: 300;
-            letter-spacing: 2px;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            font-style: italic;
-        }
-
-        .cta-btn {
-            padding: 15px 40px;
-            background-color: var(--brand-navy);
-            color: white;
-            text-decoration: none;
-            border: none;
-            letter-spacing: 2px;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-
-        .cta-btn:hover {
-            background-color: #000;
-            transform: translateY(-2px);
-        }
-
-        /* PRODUCT GRID */
-        .section-title {
-            text-align: center;
-            margin: 60px 0 30px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 0 5%;
-            margin-bottom: 80px;
-        }
-
-        .product-card {
-            text-align: center;
-            background: var(--brand-cream);
-            padding-bottom: 20px;
-            transition: 0.3s;
-        }
-
-        .product-card img {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-        }
-
-        .product-card h3 {
-            margin: 15px 0 5px;
-            font-weight: 400;
-        }
-
-        .price {
-            font-weight: bold;
-            color: var(--brand-navy);
-        }
-
-        /* FOOTER */
-        footer {
-            background: var(--brand-navy);
-            color: white;
-            padding: 50px 5%;
-            text-align: center;
-        }
-
-        .footer-logo {
-            font-size: 1.2rem;
-            letter-spacing: 5px;
-            margin-bottom: 20px;
-        }
+        /* Slide-out Cart */
+        #cart-panel { position: fixed; right: -350px; top: 0; width: 300px; height: 100%; background: white; box-shadow: -2px 0 10px rgba(0,0,0,0.1); transition: 0.4s; z-index: 2000; padding: 25px; }
+        #cart-panel.active { right: 0; }
+        .cart-item { border-bottom: 1px solid #eee; padding: 15px 0; display: flex; justify-content: space-between; font-size: 0.9rem; }
+        input { width: 100%; padding: 12px; margin: 20px 0 10px; border: 1px solid #ccc; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="nav-links">
-            <a href="#">Shop</a>
-            <a href="#">About</a>
-        </div>
-        <div class="logo">REBOTE</div>
-        <div class="nav-links">
-            <a href="#">Cart (0)</a>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <h1>Elevated Sports Essentials</h1>
-        <p>Handcrafted Padel Luxury. Est 2024.</p>
-        <button class="cta-btn" onclick="scrollToProducts()">SHOP THE COLLECTION</button>
-    </section>
-
-    <h2 class="section-title" id="shop">The Signature Series</h2>
-    
-    <div class="product-grid">
-        <div class="product-card">
-            <div style="height:400px; background:#ddd; display:flex; align-items:center; justify-content:center;">[Bag Photo 1]</div>
-            <h3>Onyx Quilted Tote</h3>
-            <p class="price">$70.00</p>
-            <button class="cta-btn" style="padding: 10px 20px; font-size: 0.8rem;">ADD TO CART</button>
-        </div>
-
-        <div class="product-card">
-            <div style="height:400px; background:#e8e4db; display:flex; align-items:center; justify-content:center;">[Bag Photo 2]</div>
-            <h3>Sandstone Quilted Tote</h3>
-            <p class="price">$70.00</p>
-            <button class="cta-btn" style="padding: 10px 20px; font-size: 0.8rem;">ADD TO CART</button>
-        </div>
+<nav>
+    <div>
+        <a href="about.html">Our Story</a>
+        <a href="product.html" style="margin-left:20px;">Products</a>
     </div>
+    <a href="index.html" class="logo">REBOTE</a>
+    <a href="#" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</a>
+</nav>
 
-    <footer>
-        <div class="footer-logo">REBOTE</div>
-        <p>Handcrafted Faux Leather Padel Bags</p>
-        <p style="font-size: 0.8rem; opacity: 0.6;">© 2024 REBOTE SPORT. All Rights Reserved.</p>
-    </footer>
+<div class="hero">
+    <h1>REBOTE SPORT</h1>
+    <p>Handcrafted Luxury for the Court</p>
+</div>
 
-    <script>
-        function scrollToProducts() {
-            document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
+<div class="product-grid">
+    <div class="card">
+        <img src="your-image-1.jpg" alt="Padel Bag">
+        <h3>Onyx Quilted Tote</h3>
+        <p><strong>$70.00</strong></p>
+        <button class="btn" onclick="addToCart('Onyx Quilted Tote', 70, 'https://rebote.com/products/onyx')">Add to Cart</button>
+    </div>
+    <div class="card">
+        <img src="your-image-2.jpg" alt="Padel Bag">
+        <h3>Sandstone Quilted Tote</h3>
+        <p><strong>$70.00</strong></p>
+        <button class="btn" onclick="addToCart('Sandstone Quilted Tote', 70, 'https://rebote.com/products/sandstone')">Add to Cart</button>
+    </div>
+</div>
+
+<div id="cart-panel">
+    <h2 style="letter-spacing: 2px;">YOUR CART</h2>
+    <div id="cart-items"></div>
+    <div style="margin-top: 20px; font-weight: bold;">Total: $<span id="total-price">0</span></div>
+    
+    <input type="text" id="phone" placeholder="Enter Mobile Number">
+    <button class="btn" onclick="checkout()">ORDER VIA WHATSAPP</button>
+    <button onclick="toggleCart()" style="background:none; border:none; color:grey; cursor:pointer; margin-top:20px; width:100%;">Close</button>
+</div>
+
+<script>
+    let cart = [];
+    function toggleCart() { document.getElementById('cart-panel').classList.toggle('active'); }
+
+    function addToCart(name, price, link) {
+        cart.push({name, price, link});
+        updateCart();
+        toggleCart(); // Opens cart automatically when item added
+    }
+
+    function updateCart() {
+        document.getElementById('cart-count').innerText = cart.length;
+        let itemsDiv = document.getElementById('cart-items');
+        itemsDiv.innerHTML = "";
+        let total = 0;
+        cart.forEach((item) => {
+            total += item.price;
+            itemsDiv.innerHTML += `<div class="cart-item"><span>${item.name}</span> <span>$${item.price}</span></div>`;
+        });
+        document.getElementById('total-price').innerText = total;
+    }
+
+    function checkout() {
+        let phone = document.getElementById('phone').value;
+        if(!phone) { alert("Please enter your mobile number."); return; }
+        
+        let message = `Hello Rebote! I would like to place an order:%0A%0A`;
+        message += `Customer Phone: ${phone}%0A%0AItems:%0A`;
+        cart.forEach(item => {
+            message += `- ${item.name} (${item.link})%0A`;
+        });
+        message += `%0ATotal: $${document.getElementById('total-price').innerText}`;
+        
+        // Replace YOUR_NUMBER with your actual phone number (e.g., 971501234567)
+        window.open(`https://wa.me/YOUR_NUMBER?text=${message}`);
+    }
+</script>
 </body>
 </html>
+
